@@ -43,7 +43,7 @@ KeysJoy is built on **[Kontroller](https://github.com/rostopira/kontroller)** by
 
 1. Open KeysJoy on your Android phone.
 2. Turn on Bluetooth and make the phone discoverable.
-3. On the target device (PC, Mac, TV, iPad), search for Bluetooth devices and connect to **"Pixel HID1"**.
+3. On the target device (PC, Mac, TV, iPad), search for Bluetooth devices and connect to **your phone's Bluetooth name**.
 
 ---
 
@@ -320,8 +320,8 @@ Alternatively, open the project in Android Studio and run directly on a connecte
 ## Usage
 
 1. **Remove old pairings** — In your phone's Bluetooth settings, remove any previous pairings between the phone and the target host (one-time step).
-2. **Open KeysJoy** — The app registers as a Bluetooth HID device ("Pixel HID1").
-3. **Pair from the host** — On your computer, TV, or tablet, search for **"Pixel HID1"** and initiate pairing from the host side.
+2. **Open KeysJoy** — The app registers as a Bluetooth HID device, advertising under your phone's Bluetooth name.
+3. **Pair from the host** — On your computer, TV, or tablet, search for **your phone's Bluetooth name** and initiate pairing from the host side.
 4. **Accept pairing** — Accept the request on your phone.
 5. **Start using** — Your phone is now a wireless keyboard and mouse.
 
