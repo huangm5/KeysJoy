@@ -1,2 +1,2 @@
-com/github/roarappstudio/btkontroller/Kontroller.class
-com/github/roarappstudio/btkontroller/SplashScreen.class
+com/github/ifeel/keysjoy/Kontroller.class
+com/github/ifeel/keysjoy/SplashScreenActivity.class

@@ -1,3 +1,3 @@
--keep class com.github.roarappstudio.btkontroller.Kontroller
--keep class com.github.roarappstudio.btkontroller.SplashScreenActivity
--keep class com.github.roarappstudio.btkontroller.SelectDeviceActivity
+-keep class com.github.ifeel.keysjoy.Kontroller
+-keep class com.github.ifeel.keysjoy.SplashScreenActivity
+-keep class com.github.ifeel.keysjoy.SelectDeviceActivity
