@@ -22,26 +22,19 @@ KeysJoy uses the **Bluetooth HID Device profile** to turn your Android phone int
 
 KeysJoy is built on **[Kontroller](https://github.com/rostopira/kontroller)** by [Dima Rostopira](https://github.com/rostopira), an open-source library that pioneered using Android's `BluetoothHidDevice` API to expose a phone as a Bluetooth HID peripheral. Both projects are licensed under the **Apache License 2.0**.
 
-On top of Kontroller's Bluetooth HID foundation, KeysJoy adds:
-
-- **Custom keyboard UI** — A responsive 6×6 split-grid keyboard in landscape mode, with sticky modifiers, Caps Lock toggle, and Shift-aware key labels. Portrait mode hides the keyboard for full-screen trackpad use.
-- **Gesture system** — Tap, double-tap, long-press drag, and two-finger scroll (vertical + horizontal) with cursor speed ramp.
-- **Toolbar controls** — Bluetooth connection management, device switching, orientation toggle, 5-level mouse/scroll speed presets, system keyboard input forwarding, screen always-on, and auto-reconnect.
-- **Draggable panel dividers** — Resize keyboard and trackpad panels to your preference, with height presets for the keyboard row.
-- **Navigation buttons** — Android-style Back, Home, and Task buttons that send Meta-key shortcuts to the host.
-- **Haptic feedback** — Vibration on key presses, mouse buttons, and drag activation, with a toggle.
-- **Multi-device switching** — Seamless switching between multiple paired hosts, plus a "make discoverable" option.
-
 ---
 
 ## Highlights
 
 - **Bluetooth HID Device profile** — no companion software or drivers needed; works with any OS that supports standard Bluetooth peripherals.
-- **Three-panel landscape layout** — split keyboard flanking a central trackpad, with two draggable vertical dividers.
+- **Three-panel landscape layout** — split keyboard flanking a central trackpad, with two draggable vertical dividers and height presets for the keyboard row.
+- **Custom keyboard UI** — responsive 6×6 split-grid keyboard with sticky modifiers, Caps Lock toggle, and Shift-aware key labels. Portrait mode hides the keyboard for full-screen trackpad use.
 - **Gesture detection** — tap, long-press drag, double-tap-to-drag, and two-finger scroll, all with sub-pixel precision and a speed ramp.
 - **Dedicated mouse buttons** — press-and-hold Left, Wheel, and Right for precise text selection and drag operations.
-- **Multi-device pairing and auto-reconnect** — pair with multiple hosts, switch seamlessly, and auto-reconnect when a host returns in range.
+- **Toolbar controls** — Bluetooth connection management, device switching, orientation toggle, 5-level mouse/scroll speed presets, system keyboard input forwarding, screen always-on, and auto-reconnect.
+- **Navigation buttons** — Android-style Back, Home, and Task buttons that send Meta-key shortcuts to the host.
 - **Haptic feedback** — tactile vibration on key presses, mouse clicks, and drag activation, with a one-tap toggle.
+- **Multi-device pairing and auto-reconnect** — pair with multiple hosts, switch seamlessly, and auto-reconnect when a host returns in range.
 - **Portrait + Landscape dual-mode** — one-tap switch between full-screen trackpad and three-panel keyboard layout.
 
 ---
@@ -51,6 +44,12 @@ On top of Kontroller's Bluetooth HID foundation, KeysJoy adds:
 1. Open KeysJoy on your Android phone.
 2. Turn on Bluetooth and make the phone discoverable.
 3. On the target device (PC, Mac, TV, iPad), search for Bluetooth devices and connect to **"Pixel HID1"**.
+
+---
+
+## Download
+
+Download the latest APK from the [Releases page](https://github.com/iFeel-is-a-mouse/KeysJoy/releases).
 
 ---
 
