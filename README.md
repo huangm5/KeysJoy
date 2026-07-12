@@ -18,31 +18,122 @@ KeysJoy is an Android application that uses the **Bluetooth HID Device profile**
 
 ---
 
-## Screenshots
+## Highlights
 
-### Landscape Mode — Keyboard + Trackpad
-
-<p align="center">
-  <img src="screenshots/landscape.jpg" alt="KeysJoy Landscape - Three-panel layout with keyboard, trackpad, and side panel" width="720" />
-</p>
-
-*Three-panel split: left keyboard, central trackpad with mouse buttons, right keyboard.*
-
-### Portrait Mode — Full-Screen Trackpad
-
-<p align="center">
-  <img src="screenshots/portrait.jpg" alt="KeysJoy Portrait - Full-screen trackpad with navigation controls" width="360" />
-</p>
-
-*Full-screen trackpad with Left, Wheel, and Right mouse buttons.*
+- **Bluetooth HID Device profile** — no companion software or drivers needed on the target device; works with any OS that supports standard Bluetooth peripherals.
+- **Three-panel landscape layout** — split keyboard flanking a central trackpad, with two draggable vertical dividers for resizing each panel.
+- **Custom gesture detection** — tap, long-press drag, double-tap-to-drag, and two-finger scroll (vertical + horizontal), all with sub-pixel precision and a cursor speed ramp.
+- **Dedicated mouse buttons** — press-and-hold Left, Wheel, and Right buttons for precise text selection and drag operations, no tap-and-hold ambiguity.
+- **Multi-device pairing and auto-reconnect** — pair with multiple hosts, switch between them seamlessly from the device switcher, and auto-reconnect when a host comes back in range.
+- **Haptic feedback with on-device toggle** — tactile vibration on every key press, mouse click, and drag activation, with a one-tap toggle on the keyboard row.
+- **Portrait + Landscape dual-mode** — one-tap switch between a full-screen trackpad portrait mode and a three-panel split keyboard + trackpad landscape mode.
 
 ---
 
-## Features
+## Quick Start
 
-### Split QWERTY Keyboard (Landscape Mode)
+1. Open the KeysJoy app on your Android phone.
+2. Turn on Bluetooth and make the phone discoverable.
+3. On the target device (PC, Mac, TV, iPad), search for Bluetooth devices and connect to **"Pixel HID1"**.
 
-The keyboard is spread across two panels flanking the trackpad — designed for two-thumb typing on phones.
+---
+
+## Based on Kontroller
+
+KeysJoy is built on top of **[Kontroller](https://github.com/rostopira/kontroller)** by [Dima Rostopira](https://github.com/rostopira), an open-source Android library that pioneered using Android's `BluetoothHidDevice` API to expose a phone as a Bluetooth HID peripheral.
+
+Kontroller is licensed under the **Apache License 2.0**, the same license that KeysJoy uses.
+
+### What Kontroller Provides
+
+Kontroller established the foundational architecture that KeysJoy inherits and extends:
+
+- **Bluetooth HID communication layer** — Registration of the HID device profile via `BluetoothHidDevice`, service discovery protocol (SDP) record setup, and the full connection lifecycle (pairing, connecting, disconnecting, auto-reconnect). The `BluetoothController` is directly derived from Kontroller's core controller.
+- **HID report descriptors** — The keyboard + mouse combo descriptor (`DescriptorCollection.MOUSE_KEYBOARD_COMBO`), defining how keys, mouse movements, scroll, and buttons are encoded into raw HID byte reports that any host OS understands without drivers.
+- **Report encoding classes** — The `MouseReport`, `KeyboardReport`, and related inline classes that map logical input state (button presses, key codes, movement deltas) to the exact byte arrays the HID descriptor expects.
+- **Sender abstraction** — The `Sender`, `RelativeMouseSender`, and `KeyboardSender` classes that encapsulate `BluetoothHidDevice.sendReport()` with structured report objects.
+- **Hidden API workarounds** — Reflection-based access to hidden Android Bluetooth APIs (`setScanMode`, `cancelBondProcess`, `removeBond`) needed for reliable discoverability and pairing cleanup.
+
+### What KeysJoy Adds
+
+On top of Kontroller's solid Bluetooth HID foundation, KeysJoy builds a complete, polished user-facing application:
+
+- **Custom keyboard UI** — A responsive 6×6 split-grid keyboard layout in landscape mode, with sticky modifiers, Caps Lock toggle, and Shift-aware key labels. Portrait mode hides the keyboard for full-screen trackpad use.
+- **Gesture detection** — Single-finger tap, double-tap, long-press drag, and two-finger scroll (vertical + horizontal), all translated into precise HID mouse and scroll reports with sub-pixel accumulation and a cursor speed ramp.
+- **Toolbar controls** — A unified toolbar for Bluetooth connection management, device switching, orientation toggle, 5-level mouse/scroll speed presets, system keyboard input forwarding, screen always-on, and auto-reconnect.
+- **Panel resizing** — Two draggable vertical dividers let you resize keyboard and trackpad panels to your preference, with height presets for the keyboard row.
+- **Navigation buttons** — Android-style Back, Home, and Task buttons that send Meta-key shortcuts to the host.
+- **Haptic feedback** — Vibration on key presses, mouse buttons, and drag activation, with a toggle to turn it off.
+- **Multi-device switching** — A device switcher popup for seamless connection switching between multiple paired hosts, plus a "make discoverable" option.
+- **External keyboard forwarding** — Physical keyboards connected to the phone can forward their input to the target host.
+
+---
+
+## Screenshots
+
+### Portrait Mode
+
+<p align="center">
+  <img src="screenshots/portrait.jpg" alt="KeysJoy Portrait — Trackpad with toolbar and mouse buttons" width="360" />
+</p>
+
+*Full-screen trackpad with toolbar controls, and Left / Wheel / Right mouse buttons.*
+
+### Landscape Mode — Full Keyboard + Trackpad
+
+<p align="center">
+  <img src="screenshots/landscape.jpg" alt="KeysJoy Landscape — Three-panel layout with split keyboard, trackpad, and side panel" width="720" />
+</p>
+
+*Three-panel split: left keyboard, central trackpad with mouse buttons, right keyboard. The complete keyboard + trackpad layout.*
+
+---
+
+## Portrait Mode
+
+In portrait orientation, the keyboard panels are hidden and the entire screen becomes a touch surface for cursor control:
+
+- **Full-screen trackpad** — The entire phone screen acts as a trackpad. Single-finger movement controls the cursor; multi-finger gestures are fully supported.
+- **Mouse buttons** — Left, Wheel, and Right buttons sit below the trackpad area.
+- **Toolbar** — All controls remain accessible at the top of the screen.
+- **Optimized for one-handed use** — Maximum space for precise cursor control, no keyboard splitting.
+
+Tap the ⌨️ **Orientation** button in the toolbar to switch between portrait trackpad mode and landscape keyboard mode.
+
+---
+
+## Toolbar Controls
+
+The toolbar sits at the top of the screen in both portrait and landscape modes. Each icon reflects the actual visual design used in the app.
+
+| Icon | Control | Description |
+|------|---------|-------------|
+| 🟢 / 🔴 | **Bluetooth Status** | Shows connection state. Tap to connect to the last paired device or disconnect from the current one. |
+| Device Name ▼ | **Device Name** | Displays the connected host's name. Tap to open the **device switcher** popup — switch between paired hosts or make the phone discoverable. A `▶` marker indicates the active connection. |
+| ⌨️ | **Orientation** | Toggles between portrait trackpad mode and landscape keyboard + trackpad mode (three-panel split). |
+| 1️⃣ – 5️⃣ | **Speed Level** | Cycles through 5 mouse/scroll speed presets. State is persisted across app restarts. |
+
+| Level | Emoji | Mouse Speed | Scroll Speed |
+|-------|-------|-------------|-------------|
+| 1 | 1️⃣ | 0.4× | 0.4× |
+| 2 | 2️⃣ | 0.6× | 0.6× |
+| 3 | 3️⃣ | 0.8× | 0.8× |
+| 4 | 4️⃣ | 1.0× (default) | 1.0× |
+| 5 | 5️⃣ | 1.2× | 1.2× |
+
+| Icon | Control | Description |
+|------|---------|-------------|
+| 🔠 | **Input Method** | Opens the system keyboard for text input. Any text typed is forwarded to the target host as HID key reports. A hidden `EditText` field captures keystrokes and converts them to HID keycodes via `KeyCharacterMap`. The Enter key is forwarded to the host rather than dismissing the keyboard. |
+| 🌝 / 🌚 | **Screen Always-On** | Toggles whether the phone screen stays on while KeysJoy is active. 🌝 = screen stays on. 🌚 = normal screen timeout. State is persisted. |
+| 🔗 / ⛓️‍💥 | **Auto-Pair** | Toggles automatic reconnection. When enabled (🔗), the app attempts to reconnect every 5 seconds after disconnection. When disabled (⛓️‍💥), reconnection must be triggered manually. |
+
+---
+
+## Landscape Mode — Keyboard + Trackpad
+
+Landscape mode presents the full three-panel layout: split keyboard on both sides flanking a central trackpad, designed for two-thumb typing on phones. Two draggable vertical dividers let you resize each panel.
+
+### Keyboard Panels
 
 **Left Panel (6×6 grid)**
 
@@ -66,41 +157,19 @@ The keyboard is spread across two panels flanking the trackpad — designed for 
 | 5 | `Home` `End` `↑` `\` `⌥` `Enter` |
 | 6 | `,` `←` `↓` `→` `Space` `.` |
 
-#### Key Behaviors
+Key labels automatically reflect the current Shift state: lowercase when Shift is off, uppercase when Shift or Caps Lock is active.
 
-- **Letter keys (A–Z):** Send the corresponding HID keycode. Labels update automatically to reflect Shift state: lowercase when Shift is off, uppercase when Shift or Caps Lock is active.
+### App-Specific Keyboard Features
 
-- **Number keys (0–9):** Send digit keycodes. With Shift active, they send their shifted symbols (`!` `@` `#` `$` `%` `^` `&` `*` `(` `)`).
+- **Sticky modifiers (Shift, Ctrl, Alt, ⌘, ⌥):** Tap once to activate the modifier for the next regular key only. The button highlights while active. Tap again to cancel. Auto-releases after any non-modifier key is pressed.
 
-- **Modifier keys (Shift, Ctrl, Alt, ⌘, ⌥):** Operate in **sticky one-shot mode**. Tap once to activate the modifier for the next regular key only — the button visually highlights. Tap again while active to cancel. Auto-release happens after any non-modifier key is pressed.
+- **Caps Lock:** A toggle-lock — each tap flips the state and sends the actual HID CapsLock keycode to the host. The button shows a pressed state while active. Key labels update globally.
 
-- **Caps Lock:** Unlike other modifiers, Caps Lock is a **toggle-lock**. Each tap flips the state on/off and sends the actual HID CapsLock keycode to the host. The button shows a pressed state while active. Key labels update to uppercase when Caps Lock is on.
+- **👋 / ✋ (Haptic toggle):** Toggles vibration feedback on key presses. 👋 = haptics on, ✋ = off. State is persisted across app restarts.
 
-- **Tab (0x2B):** Sends the HID Tab keycode. Inserts a tab character or advances focus on the target device.
+- **70% (Height preset):** Cycles the keyboard panel height through four presets: **100%** → **90%** → **80%** → **70%** → back to 100%. Useful for revealing content behind the keyboard. State is persisted.
 
-- **Esc (0x29):** Sends the HID Escape keycode. Dismisses dialogs, exits full-screen, or cancels operations on the target device.
-
-- **BkSp (Backspace, 0x2A):** Sends the HID Backspace keycode. Deletes the character to the left of the cursor. Available in both panels.
-
-- **Del (Forward Delete, 0x4C):** Sends the HID Delete Forward keycode. Deletes the character to the right of the cursor (or the selected item). Available only in the left panel.
-
-- **Enter (0x28):** Sends the HID Enter/Return keycode. Confirms input, sends form data, or inserts a newline.
-
-- **Space (0x2C):** Inserts a space character. Spans 3 columns in the left panel and 1 column in the right panel for convenient thumb access.
-
-- **Home (0x4A):** Sends the HID Home keycode. Moves the cursor to the beginning of the current line, or scrolls to the top of a document when combined with Ctrl.
-
-- **End (0x4D):** Sends the HID End keycode. Moves the cursor to the end of the current line, or scrolls to the bottom of a document when combined with Ctrl.
-
-- **Arrow keys (← ↑ ↓ →):** Send HID arrow keycodes for cursor navigation. Hold-and-drag in the right panel bottom row for directional control.
-
-- **Symbol keys (`` ` `` `-` `=` `[` `]` `\` `;` `'` `,` `.` `/`):** Send their corresponding HID keycodes. With Shift active, they send their shifted counterparts (`~` `_` `+` `{` `}` `|` `:` `"` `<` `>` `?`).
-
-- **🖱️ (Portrait button):** Switches from the three-panel landscape keyboard layout to the full-screen portrait trackpad mode. Tapping the orientation toolbar button (⌨️) in portrait mode returns to landscape.
-
-- **👋 / ✋ (Haptic toggle):** Toggles vibration feedback on key presses. Shows 👋 when haptics are on, ✋ when off. State is persisted across app restarts.
-
-- **70% (Height preset):** Cycles the keyboard panel height through four presets on each tap: **100%** → **90%** → **80%** → **70%** → back to 100%. Useful for revealing content behind the keyboard or adjusting to different screen sizes. State is persisted.
+- **🖱️ (Orientation switch):** Switches from landscape keyboard mode to portrait trackpad mode. Same function as the toolbar ⌨️ button.
 
 ---
 
@@ -112,18 +181,17 @@ The central trackpad area translates finger movements into HID mouse reports wit
 
 | Gesture | Action | Details |
 |---------|--------|---------|
-| **Tap** | Left click | Confirmed after the double-tap timeout expires with no second tap. Sends a complete press-and-release sequence. |
-| **Move** | Cursor movement | Translates finger delta into relative mouse movement with configurable speed. Includes a speed ramp: cursor starts at 15% speed and smoothly accelerates to 100% over 400 ms — precise for small movements, fast for large sweeps. |
-| **Long press (500 ms)** | Click-and-drag | Enters drag mode: left mouse button is held down. Finger movement moves the cursor while dragging. A short vibration (30 ms) signals activation. Release lifts the left button. |
-| **Double-tap** | Click-and-drag | Double-tap and hold on the second tap enters drag mode. The left mouse button is held and finger movement drags the cursor. A short vibration (30 ms) signals activation. Release to drop. |
+| **Tap** | Left click | Confirmed after the double-tap timeout expires with no second tap. |
+| **Move** | Cursor movement | Translates finger delta into relative mouse movement with configurable speed. Includes a speed ramp: cursor starts at 15% speed and accelerates to 100% over 400 ms — precise for small movements, fast for large sweeps. |
+| **Long press (500 ms)** | Click-and-drag | Enters drag mode: left mouse button is held down. A 30 ms vibration signals activation. Release to drop. |
+| **Double-tap** | Click-and-drag | Double-tap and hold on the second tap enters drag mode. A 30 ms vibration signals activation. Release to drop. |
 
 #### Multi-Finger Gestures
 
 | Gesture | Action | Details |
 |---------|--------|---------|
-| **Two-finger tap** | Right click | Both fingers tap simultaneously. Detected via pointer count in `onSingleTapUp` (≥2 pointers) or on pointer lift when finger spread exceeds 30 px. |
-| **Two-finger swipe** | Scroll (vertical + horizontal) | Both fingers move together. Translates into HID scroll wheel reports with configurable scroll speed and sub-pixel accumulation for smooth scrolling. A `scrolled` flag prevents ghost right-clicks on lift. |
-| **Pinch-to-zoom** | Zoom (Ctrl + scroll) | Detected by `ScaleGestureDetector`. Sends Ctrl+scroll deltas mapped from the scale factor change. While pinching is in progress, two-finger scroll is suppressed to avoid conflicting HID reports. |
+| **Two-finger tap** | Right click | Detected via pointer count (≥2) or pointer lift with spread > 30 px. |
+| **Two-finger swipe** | Scroll (vertical + horizontal) | Both fingers move together. Translates into HID scroll wheel reports with sub-pixel accumulation. A `scrolled` flag prevents ghost right-clicks on lift. |
 
 #### Multi-Shot Wake
 
@@ -141,11 +209,13 @@ To prevent the host from entering deep sleep and missing the first mouse movemen
 | Double-tap-and-hold | Click-and-drag |
 | Two-finger tap | Right click |
 | Two-finger swipe | Scroll (vertical + horizontal) |
-| Pinch | Zoom (Ctrl + scroll) |
+
 
 ---
 
 ### Mouse Buttons
+
+Dedicated mouse buttons exist to better mimic the physical feel of a real mouse. They are especially critical for **text selection in editing scenarios**: press and hold the **Left** button while dragging a finger on the trackpad, and you get the same precise, character-by-character control as holding a physical mouse button while moving — perfect for selecting text, adjusting cursor ranges, or resizing UI elements. Without dedicated buttons, text selection via tap-and-hold gestures is imprecise — the delay before drag mode activates and the absence of tactile feedback make it easy to overshoot or lose your selection.
 
 Three dedicated buttons sit below the trackpad area in both landscape and portrait modes:
 
@@ -167,9 +237,65 @@ Scroll speed is controlled by the **Speed Level** setting in the toolbar and app
 
 ---
 
-### Navigation Buttons (Landscape Mode)
+## Mouse Cursor Smoothness
 
-Below the mouse buttons, three Android-style navigation buttons send keyboard shortcuts to the host using the **Meta (GUI/Windows) modifier** key:
+KeysJoy employs multiple layers of smoothing and optimization to deliver fluid, stutter-free cursor control over the Bluetooth HID connection.
+
+### Speed Ramp
+
+When a finger first touches the trackpad, cursor movement starts at **15% speed** and linearly accelerates to **100%** over **400 milliseconds**. This provides precision for small, careful adjustments while still allowing fast sweeps across the screen.
+
+- **Ramp start:** 15% of configured mouse speed
+- **Ramp duration:** 400 ms
+- **Ramp curve:** Linear interpolation from 15% → 100%
+- **Skipped during drag:** The ramp is disabled for long-press drag, double-tap drag, and toolbar-button drag — cursor moves at full speed immediately for these operations.
+- **Applied to scroll:** Two-finger scrolling also benefits from the speed ramp, making scroll start gently before reaching full speed.
+
+Implementation: `getRampMultiplier()` in `ViewListener.kt` is called on every movement frame. It computes `elapsed / RAMP_DURATION_MS`, interpolates linearly between `RAMP_START_FRACTION` (0.15) and `1.0`, and returns the multiplier.
+
+### Sub-Pixel Precision Accumulation
+
+Trackpad finger deltas are tracked as floating-point values and accumulated across frames. A HID mouse report is only sent when the accumulated delta reaches at least ±1 whole integer. This prevents 1-pixel stutter and ensures smooth diagonal movement.
+
+- **Mouse accumulator (`accumMouseX`, `accumMouseY`):** Finger deltas × `mouseSpeed` × ramp multiplier are added to float accumulators. `Math.round()` is applied to the accumulated total. The integer portion is sent as a HID report, and the fractional remainder is carried forward to the next frame.
+- **Scroll accumulator (`accumScrollX`, `accumScrollY`):** Same mechanism for two-finger scroll and wheel-mode scroll. Scroll deltas × `scrollSpeed` × ramp multiplier accumulate as floats. Integer scroll ticks are sent only when the accumulated value crosses a whole-number boundary.
+
+Without sub-pixel accumulation, fractional deltas would be truncated to zero on every frame — producing visible stutter and dead zones at slow finger speeds.
+
+### Multi-Shot Wake
+
+To prevent the host from entering a deep-sleep state and dropping the first mouse report, KeysJoy sends **4 zero-byte mouse reports** at **5 ms intervals** immediately on touch-down.
+
+- **Timing:** 4 empty reports queued via `Handler.postDelayed()` at 0 ms, 5 ms, 10 ms, and 15 ms after the finger touches down.
+- **Report format:** Each report is a freshly zeroed `ScrollableTrackpadMouseReport` (7-byte HID report with all fields at zero).
+- **Cancellation:** All pending wake runnables are cancelled the moment real movement begins (first `onScroll` event), preventing unnecessary radio traffic.
+- **Drag safety:** Wake reports are skipped when `buttonHeld` is true, to avoid clearing the left-button state mid-drag.
+
+This technique eliminates the perceptible "first-movement lag" that occurs when a host's Bluetooth HID stack has entered power saving between the last movement and a new touch.
+
+### HID Range Clamping
+
+Mouse movement deltas are clamped to the HID specification range of **±2047** before encoding into the report bytes. This prevents overflow in the 12-bit signed fields of the HID mouse descriptor and ensures the report remains valid even during rapid finger sweeps. Clamping is done in `RelativeMouseSender.sendMouseMove()`.
+
+### Drag Threshold (Touch Slop)
+
+A finger movement must exceed the Android system **touch slop** distance (`ViewConfiguration.scaledTouchSlop`) before a custom drag trigger is cancelled. This prevents tiny, unintended finger shifts from prematurely aborting a drag gesture, acting as a small dead zone for drag initiation.
+
+### Gesture Discrimination Flags
+
+Logical flags prevent conflicting HID reports between the gesture detectors (`GestureDetector` and raw `MotionEvent` handling):
+
+| Flag | Role |
+|------|------|
+| `scrolled` | Set when two-finger scroll fires → suppresses ghost right-click on finger lift |
+
+| `rightClickSent` | Set when right-click fires via `ACTION_POINTER_UP` → suppresses ghost left-click in `onSingleTapUp` |
+
+---
+
+### Navigation Buttons
+
+Below the mouse buttons (landscape mode), three Android-style navigation buttons send keyboard shortcuts to the host using the **Meta (GUI/Windows) modifier** key:
 
 | Button | Shortcut Sent | Typical Effect |
 |--------|---------------|----------------|
@@ -181,45 +307,7 @@ Each press sends the key-down report immediately, followed by an all-keys-releas
 
 ---
 
-### Toolbar Controls (Portrait / Simple Mode)
-
-In portrait mode, a custom toolbar sits at the top of the screen with quick-access controls. The emoji icons shown below are the actual visual design used in the app.
-
-| Icon | Control | Function |
-|------|---------|----------|
-| 🟢 / 🔴 | **Bluetooth Status** | Shows current connection state. Tap to connect to the last paired device, or disconnect from the current one. |
-| Device Name ▼ | **Device Name** | Displays the connected host's name. Tap to open the **device switcher** popup — switch between paired hosts without re-pairing, or make the phone discoverable. A `▶` marker indicates the active connection. |
-| ⌨️ | **Orientation** | Toggles between **landscape keyboard mode** (three-panel split: keyboard \| trackpad \| keyboard) and **portrait trackpad mode** (full-screen trackpad). |
-| 1️⃣ – 5️⃣ | **Speed Level** | Cycles through 5 mouse/scroll speed presets. Each tap advances to the next level. State is persisted across app restarts. |
-
-| Level | Emoji | Mouse Speed | Scroll Speed |
-|-------|-------|-------------|-------------|
-| 1 | 1️⃣ | 0.4× | 0.4× |
-| 2 | 2️⃣ | 0.6× | 0.6× |
-| 3 | 3️⃣ | 0.8× | 0.8× |
-| 4 | 4️⃣ | 1.0× (default) | 1.0× |
-| 5 | 5️⃣ | 1.2× | 1.2× |
-
-| Icon | Control | Function |
-|------|---------|----------|
-| 🔠 | **Input Method** | Opens the system keyboard for text input. Any text typed on the phone's software keyboard or a connected physical keyboard is forwarded to the target host as HID key reports. A hidden `EditText` field with `TYPE_TEXT_VARIATION_VISIBLE_PASSWORD` captures keystrokes and converts them to HID keycodes via `KeyCharacterMap`. The Enter key is forwarded to the host rather than dismissing the keyboard. |
-| 🌝 / 🌚 | **Screen Always-On** | Toggles whether the phone screen stays on while KeysJoy is active. 🌝 = screen stays on. 🌚 = normal screen timeout. State is persisted. |
-| 🔗 / ⛓️‍💥 | **Auto-Pair** | Toggles automatic reconnection. When enabled (🔗), the app attempts to reconnect every 5 seconds when the target device goes out of range and comes back. When disabled (⛓️‍💥), reconnection must be triggered manually. |
-
----
-
-### Portrait Mode — Full-Screen Trackpad
-
-In portrait orientation, the keyboard panels are hidden and the entire screen becomes a touch surface for cursor control:
-
-- **Full-screen touch area** — Use the entire phone screen as a trackpad. Single-finger movement controls the cursor; multi-finger gestures are fully supported.
-- **Mouse buttons** — The Left, Wheel, and Right buttons remain available below the trackpad.
-- **Toolbar** — All toolbar controls remain accessible at the top.
-- **Optimized for one-handed use** — No keyboard splitting; maximum space for precise cursor control.
-
----
-
-### Panel Resizing (Landscape Mode)
+### Panel Resizing
 
 The landscape layout consists of three resizable panels separated by two vertical dividers.
 
@@ -234,18 +322,18 @@ Each panel is constrained to a minimum of **20%** and a maximum of **50%** of th
 
 ---
 
-### Multi-Touch Support
+## Multi-Touch Support
 
 The trackpad supports up to multiple simultaneous touch points:
 
-- **Two-finger gestures** — Scroll, right-click, and pinch-to-zoom as described in the Trackpad section above.
+- **Two-finger gestures** — Scroll and right-click as described in the Trackpad section above.
 - **Pointer tracking** — `activePointerCount` is maintained in real time to distinguish single-touch from multi-touch gestures.
-- **Gesture discrimination** — `scrolled` and `scaled` flags prevent conflicting gestures (e.g., two-finger scroll won't trigger a ghost right-click on lift; pinch-to-zoom suppresses two-finger scroll).
+- **Gesture discrimination** — `scrolled` flag prevents conflicting gestures (e.g., two-finger scroll won't trigger a ghost right-click on lift).
 - **Right-click via both tap and lift** — Two-finger right click can fire either from a simultaneous tap (`onSingleTapUp` with ≥2 pointers) or from lifting the second finger after both have been down (with >30 px spread).
 
 ---
 
-### Haptic Feedback
+## Haptic Feedback
 
 Vibration feedback provides tactile confirmation for user actions:
 
@@ -262,7 +350,7 @@ Haptic feedback can be toggled on/off using the 👋/✋ button on the bottom ro
 
 ---
 
-### External Keyboard Forwarding
+## External Keyboard Forwarding
 
 If you connect a physical keyboard to your Android phone (via USB-OTG or Bluetooth), KeysJoy can forward its input to the target host:
 
@@ -272,7 +360,7 @@ If you connect a physical keyboard to your Android phone (via USB-OTG or Bluetoo
 
 ---
 
-### Multi-Device Pairing & Switching
+## Multi-Device Pairing & Switching
 
 - **Pair with multiple hosts** — Each successful pairing is recorded in the paired devices list.
 - **Device switcher popup** — Tap the device name in the toolbar to open a dropdown listing all paired devices. The currently connected device shows a `▶` prefix.
@@ -281,7 +369,7 @@ If you connect a physical keyboard to your Android phone (via USB-OTG or Bluetoo
 
 ---
 
-### Auto-Reconnect
+## Auto-Reconnect
 
 When enabled, the app automatically attempts to reconnect to the last paired device:
 
@@ -429,7 +517,7 @@ keysjoy/
 │       │   ├── senders/
 │       │   │   ├── KeyboardSender.kt         # External physical keyboard input
 │       │   │   ├── RelativeMouseSender.kt    # Relative mouse movement & scroll
-│       │   │   ├── Sender.kt                 # Base HID sender
+│       │   │   └── Sender.kt                 # Base HID sender
 │       │   └── ui/
 │       │       ├── DividerView.kt            # Draggable panel dividers
 │       │       ├── KeyboardPanelHelper.kt    # Virtual keyboard builder & events
