@@ -216,7 +216,6 @@ In portrait orientation, the keyboard panels are hidden and the entire screen be
 - **Mouse buttons** — The Left, Wheel, and Right buttons remain available below the trackpad.
 - **Toolbar** — All toolbar controls remain accessible at the top.
 - **Optimized for one-handed use** — No keyboard splitting; maximum space for precise cursor control.
-- **Gyroscope-ready** — The portrait layout is ideal for tilt-based cursor movement (see Gyroscope Motion Control below).
 
 ---
 
@@ -232,18 +231,6 @@ The landscape layout consists of three resizable panels separated by two vertica
 Each panel is constrained to a minimum of **20%** and a maximum of **50%** of the total width, preventing any panel from becoming unusably narrow or overly wide. Divider positions are persisted across app restarts, so your preferred layout is remembered.
 
 **Height presets:** In addition to width resizing, the entire keyboard panel height can be cycled through four presets using the `70%` button on the bottom row of the left keyboard panel: **100%** → **90%** → **80%** → **70%** of screen height. The button label updates to reflect the current percentage. The preset index is persisted.
-
----
-
-### Gyroscope Motion Control
-
-Move the cursor by tilting your phone — no finger contact required.
-
-- **Sensor:** Uses the device's **gyroscope** sensor (`android.hardware.sensor.gyroscope`, required).
-- **Mapping:** Tilt angles are mapped to absolute mouse coordinates: `X = (angleX * 3840 / π) + 1920`, `Y = (angleY * 2160 / π) + 1080`. This covers a virtual 3840×2160 screen area.
-- **Report type:** Sends HID **absolute mouse reports** (Report ID 2), which position the cursor at exact coordinates rather than moving it relative to the current position.
-- **Update rate:** Reports are sent only when the calculated pixel position changes from the last sent value, avoiding redundant HID traffic.
-- **Requirement:** Gyroscope hardware is mandatory. Devices without a gyroscope cannot install the app (declared as `android:required="true"` in the manifest).
 
 ---
 
@@ -315,7 +302,7 @@ The app sends raw HID reports over Bluetooth:
 |---|---|
 | **Keyboard Report** | Key presses with modifier state (Shift/Ctrl/Alt/Gui) |
 | **Mouse Report** | Relative mouse movement, scroll wheel, left/right/middle buttons |
-| **Absolute Mouse Report** | Cursor positioning via gyroscope (absolute coordinates) |
+| **Absolute Mouse Report** | Absolute cursor positioning (absolute coordinates) |
 | **Feature Report** | Device capability negotiation (resolution multiplier) |
 
 ---
@@ -348,7 +335,6 @@ The app directly uses Android's built-in `BluetoothHidDevice` API — no third-p
 
 - **Android 9 (Pie) or later** — Bluetooth HID Device profile was introduced in API 28.
 - **Bluetooth HID Device support** — Some manufacturers disable the HID Device profile on their devices. Use a [compatibility checker](https://play.google.com/store/apps/details?id=com.rkaneapplabs.bluetooth_hid.bluetoothproxy) to verify support on your phone.
-- **Hardware sensors** — Gyroscope sensor required for motion cursor control.
 
 ---
 
@@ -398,7 +384,6 @@ If you've paired with multiple hosts, tap on the target device name in the toolb
 - Use the **draggable dividers** in landscape mode to resize keyboard and trackpad panels to your preference.
 - Enable **auto-reconnect** to automatically connect when a previously paired device comes back in range.
 - The **haptic toggle** (👋 / ✋ button on the bottom keyboard row) controls vibration feedback on key presses.
-- Tilt your phone in **portrait mode** to move the cursor with the gyroscope.
 
 ---
 
@@ -434,7 +419,7 @@ keysjoy/
 │       │   │   ├── GestureDetectListener.kt  # Alternative tap/double-tap detection
 │       │   │   └── ViewListener.kt           # Primary touch & gesture handler
 │       │   ├── reports/
-│       │   │   ├── AbsMouseReport.kt         # Absolute mouse report (gyroscope)
+│       │   │   ├── AbsMouseReport.kt         # Absolute mouse report
 │       │   │   ├── FeatureReport.kt          # HID feature report
 │       │   │   ├── KeyboardReport.kt         # HID keyboard report
 │       │   │   ├── MouseReport.kt            # Standard mouse report
@@ -445,7 +430,6 @@ keysjoy/
 │       │   │   ├── KeyboardSender.kt         # External physical keyboard input
 │       │   │   ├── RelativeMouseSender.kt    # Relative mouse movement & scroll
 │       │   │   ├── Sender.kt                 # Base HID sender
-│       │   │   └── SensorSender.kt           # Gyroscope → absolute mouse
 │       │   └── ui/
 │       │       ├── DividerView.kt            # Draggable panel dividers
 │       │       ├── KeyboardPanelHelper.kt    # Virtual keyboard builder & events
