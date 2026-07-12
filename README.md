@@ -12,6 +12,10 @@
   <img src="https://img.shields.io/badge/License-Apache%202.0-D22128" alt="License" />
 </p>
 
+<p align="center">
+  <img src="screenshots/icon.png" alt="KeysJoy Icon" width="120" />
+</p>
+
 ---
 
 KeysJoy uses the **Bluetooth HID Device profile** to turn your Android phone into a wireless keyboard, trackpad, and mouse. Control laptops, desktops, smart TVs, iPads — any device that supports standard Bluetooth HID peripherals. No companion software required on the target device.
