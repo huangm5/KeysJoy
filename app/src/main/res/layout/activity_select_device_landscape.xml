@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Landscape three-panel layout -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/landscape_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/the_black">
+
+<LinearLayout
+    android:id="@+id/landscape_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_gravity="bottom"
+    android:orientation="horizontal"
+    android:background="@color/panel_bg"
+    android:baselineAligned="false">
+
+    <!-- Left keyboard panel -->
+    <FrameLayout
+        android:id="@+id/left_panel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="30"
+        android:background="@drawable/panel_border"
+        android:padding="2dp">
+
+        <GridLayout
+            android:id="@+id/left_keyboard_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="6"
+            android:rowCount="6"
+            android:useDefaultMargins="false" />
+    </FrameLayout>
+
+    <!-- Divider #1: left panel ↔ trackpad -->
+    <com.github.ifeel.keysjoy.ui.DividerView
+        android:id="@+id/divider_left"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/divider_vertical" />
+
+    <!-- Center trackpad panel -->
+    <LinearLayout
+        android:id="@+id/trackpad_container"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="40"
+        android:orientation="vertical"
+        android:background="@drawable/panel_border"
+        android:padding="2dp">
+
+        <!-- Trackpad touch area (flexible) -->
+        <TextView
+            android:id="@+id/landscape_trackpad"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/view_border"
+            android:text="@string/trackpad_hint"
+            android:textColor="#666666"
+            android:gravity="center" />
+
+        <!-- Mouse buttons bar -->
+        <LinearLayout
+            android:id="@+id/mouse_buttons_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp">
+
+            <Button
+                android:id="@+id/btn_mouse_left"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:text="@string/mouse_left"
+                android:textSize="14sp"
+                android:textColor="@color/key_normal_text"
+                android:background="@drawable/key_button_special"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_mouse_middle"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:text="@string/mouse_middle"
+                android:textSize="14sp"
+                android:textColor="@color/key_normal_text"
+                android:background="@drawable/key_button_special"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_mouse_right"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:text="@string/mouse_right"
+                android:textSize="14sp"
+                android:textColor="@color/key_normal_text"
+                android:background="@drawable/key_button_special"
+                android:textAllCaps="false" />
+        </LinearLayout>
+
+        <!-- Android navigation bar -->
+        <LinearLayout
+            android:id="@+id/nav_buttons_bar"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:orientation="horizontal"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp">
+
+            <Button
+                android:id="@+id/btn_nav_back"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:text="@string/nav_back"
+                android:textSize="14sp"
+                android:textColor="@color/key_normal_text"
+                android:background="@drawable/key_button_special"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_nav_home"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:text="@string/nav_home"
+                android:textSize="14sp"
+                android:textColor="@color/key_normal_text"
+                android:background="@drawable/key_button_special"
+                android:textAllCaps="false" />
+
+            <Button
+                android:id="@+id/btn_nav_overview"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:layout_margin="1dp"
+                android:text="@string/nav_overview"
+                android:textSize="12sp"
+                android:textColor="@color/key_normal_text"
+                android:background="@drawable/key_button_special"
+                android:textAllCaps="false" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <!-- Divider #2: trackpad ↔ right panel -->
+    <com.github.ifeel.keysjoy.ui.DividerView
+        android:id="@+id/divider_right"
+        android:layout_width="8dp"
+        android:layout_height="match_parent"
+        android:background="@drawable/divider_vertical" />
+
+    <!-- Right keyboard panel -->
+    <FrameLayout
+        android:id="@+id/right_panel"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="30"
+        android:background="@drawable/panel_border"
+        android:padding="2dp">
+
+        <GridLayout
+            android:id="@+id/right_keyboard_grid"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:columnCount="6"
+            android:rowCount="6"
+            android:useDefaultMargins="false" />
+    </FrameLayout>
+
+</LinearLayout>
+</FrameLayout>

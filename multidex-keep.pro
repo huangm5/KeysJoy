@@ -1,0 +1,3 @@
+-keep class com.github.roarappstudio.btkontroller.Kontroller
+-keep class com.github.roarappstudio.btkontroller.SplashScreenActivity
+-keep class com.github.roarappstudio.btkontroller.SelectDeviceActivity

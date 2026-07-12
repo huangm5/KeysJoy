@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Original-style simple trackpad mode with custom toolbar -->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/simple_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/the_black"
+    android:fitsSystemWindows="true">
+
+    <!-- Custom Toolbar -->
+    <LinearLayout
+        android:id="@+id/custom_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:background="#1a1a1a"
+        android:paddingStart="4dp"
+        android:paddingEnd="4dp">
+
+        <!-- BT status (leftmost) -->
+        <ImageView
+            android:id="@+id/btn_bt_status"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@drawable/ic_action_app_not_connected"
+            android:padding="8dp"
+            android:scaleType="fitCenter"
+            android:background="?android:attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Bluetooth Status" />
+
+        <TextView
+            android:id="@+id/btn_device_name"
+            android:layout_width="0dp"
+            android:layout_height="44dp"
+            android:layout_weight="1"
+            android:text="No Device"
+            android:textSize="13sp"
+            android:textColor="#aaaaaa"
+            android:gravity="center_vertical"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:maxLines="1"
+            android:ellipsize="end"
+            android:background="?android:attr/selectableItemBackground"
+            android:contentDescription="Connected Device (tap to switch)" />
+
+        <!-- Orientation -->
+        <TextView
+            android:id="@+id/btn_orientation"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="⌨️"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <!-- Speed level -->
+        <TextView
+            android:id="@+id/btn_speed"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="3️⃣"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <!-- Input method -->
+        <TextView
+            android:id="@+id/btn_input_method"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="🔠"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <!-- Screen always-on -->
+        <TextView
+            android:id="@+id/btn_screen_on"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="🌝"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+        <!-- Auto pair -->
+        <TextView
+            android:id="@+id/btn_auto_pair"
+            android:layout_width="44dp"
+            android:layout_height="44dp"
+            android:text="🔗"
+            android:textSize="20sp"
+            android:gravity="center"
+            android:background="?android:attr/selectableItemBackgroundBorderless" />
+
+    </LinearLayout>
+
+    <!-- Mouse three-button bar (above trackpad) -->
+    <LinearLayout
+        android:id="@+id/mouse_buttons_bar"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:orientation="horizontal"
+        android:layout_marginTop="2dp"
+        android:layout_marginBottom="2dp"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btn_mouse_left"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="@string/mouse_left"
+            android:textSize="14sp"
+            android:background="@drawable/key_button_special"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_mouse_middle"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="@string/mouse_middle"
+            android:textSize="14sp"
+            android:background="@drawable/key_button_special"
+            android:textAllCaps="false" />
+
+        <Button
+            android:id="@+id/btn_mouse_right"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:layout_margin="2dp"
+            android:text="@string/mouse_right"
+            android:textSize="14sp"
+            android:background="@drawable/key_button_special"
+            android:textAllCaps="false" />
+    </LinearLayout>
+
+    <!-- Trackpad area (fills remaining space) -->
+    <LinearLayout
+        android:id="@+id/simple_trackpad"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:background="@drawable/view_border">
+
+        <!-- Touch area for mouse movement -->
+        <TextView
+            android:id="@+id/simple_trackpad_touch"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:text="Trackpad"
+            android:gravity="center"
+            android:textColor="#666666"
+            android:textSize="16sp" />
+    </LinearLayout>
+
+</LinearLayout>

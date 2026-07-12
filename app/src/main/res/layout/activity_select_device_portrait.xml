@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Portrait mode: full-screen trackpad -->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/portrait_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/the_black"
+    android:fitsSystemWindows="true">
+
+    <TextView
+        android:id="@+id/portrait_trackpad"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/view_border"
+        android:text="@string/trackpad_hint"
+        android:textColor="#666666"
+        android:gravity="center" />
+
+</FrameLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="mouseView" type="id"/>
+    <item name="checkModifierState" type="id"/>
+    <item name="action_disconnect" type="id"/>
+    <item name="action_autopair" type="id"/>
+    <item name="textview" type="id"/>
+    <item name="action_screen_on" type="id"/>
+    <item name="ble_app_connection_status" type="id"/>
+
+    <!-- Landscape layout IDs -->
+    <item name="landscape_root" type="id"/>
+    <item name="left_panel" type="id"/>
+    <item name="left_keyboard_grid" type="id"/>
+    <item name="divider_left" type="id"/>
+    <item name="trackpad_container" type="id"/>
+    <item name="landscape_trackpad" type="id"/>
+    <item name="mouse_buttons_bar" type="id"/>
+    <item name="btn_mouse_left" type="id"/>
+    <item name="btn_mouse_middle" type="id"/>
+    <item name="btn_mouse_right" type="id"/>
+    <item name="nav_buttons_bar" type="id"/>
+    <item name="btn_nav_back" type="id"/>
+    <item name="btn_nav_home" type="id"/>
+    <item name="btn_nav_overview" type="id"/>
+    <item name="divider_right" type="id"/>
+    <item name="right_panel" type="id"/>
+    <item name="right_keyboard_grid" type="id"/>
+    <item name="action_landscape" type="id"/>
+    <item name="portrait_trackpad" type="id"/>
+</resources>
