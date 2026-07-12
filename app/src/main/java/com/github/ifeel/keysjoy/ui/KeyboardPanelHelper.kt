@@ -321,7 +321,7 @@ class KeyboardPanelHelper(
             } else {
                 context.resources.getDrawable(R.drawable.key_button_modifier, null)
             }
-            // Caps does NOT change key labels (no refreshKeyLabels call)
+            refreshKeyLabels()
             return
         }
 
@@ -437,26 +437,42 @@ class KeyboardPanelHelper(
     }
 
     /**
-     * Refresh key labels based on current Shift state.
+     * Refresh key labels based on current Shift and Caps Lock state.
+     *
+     * Caps Lock only uppercases letter keys (A-Z). Numbers, symbols, and
+     * punctuation are unaffected. Shift applies the full symbol mapping
+     * regardless of Caps Lock state.
      */
     private fun refreshKeyLabels() {
-        val shiftActive = modifierState.leftShift || capsLockActive
+        val shiftActive = modifierState.leftShift
         for ((view, keyDef) in keyButtonMap) {
             if (keyDef.isSpecial || keyDef.specialAction != null) continue
             if (!keyDef.isModifier && view is Button) {
-                view.text = getShiftedLabel(keyDef.label, shiftActive)
+                view.text = getShiftedLabel(keyDef.label, shiftActive, capsLockActive)
             }
         }
     }
 
     /**
-     * Get the shifted/unshifted label for a key.
+     * Get the label for a key given the current Shift and Caps Lock state.
+     *
+     * Rules:
+     * - Caps Lock only affects letters (A-Z): uppercase when active, lowercase when not.
+     * - Shift affects all keys: letters become uppercase, symbols get their Shift variants.
+     * - Caps ON + Shift ON: letters uppercase (Caps), symbols get Shift variants (Shift).
      */
-    private fun getShiftedLabel(base: String, shift: Boolean): String {
+    private fun getShiftedLabel(base: String, shift: Boolean, caps: Boolean): String {
         if (base.length > 1) return base
-        if (!shift) {
-            return if (base[0].isLetter()) base.lowercase() else base
+        val ch = base[0]
+
+        // Caps Lock only affects letters — never symbols or numbers
+        if (ch.isLetter()) {
+            return if (caps || shift) base.uppercase() else base.lowercase()
         }
+
+        // Non-letter keys: only Shift matters
+        if (!shift) return base
+
         return when (base) {
             "`" -> "~"; "1" -> "!"; "2" -> "@"; "3" -> "#"; "4" -> "$"; "5" -> "%"
             "6" -> "^"; "7" -> "&"; "8" -> "*"; "9" -> "("; "0" -> ")"; "-" -> "_"; "=" -> "+"
